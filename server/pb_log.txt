@@ -1,0 +1,10 @@
+failed to execute debug.pb.js:
+ - ReferenceError: onAfterBootstrap is not defined at C:\Users\alexa\Downloads\Projet-Mobile-ING4-Create---Maxence-RIBAUTE-PICARD-Alexandre-GAO\server\pb.js:1:17(2)
+2026/02/23 21:34:56 Server started at http://127.0.0.1:8090
+├─ REST API:  http://127.0.0.1:8090/api/
+└─ Dashboard: http://127.0.0.1:8090/_/
+File pb_hooks\main.pb.js changed, please restart the app manually
+File pb_hooks\debug.pb.js changed, please restart the app manually
+File pb_hooks\main.pb.js changed, please restart the app manually
+File pb_hooks\main.pb.js changed, please restart the app manually
+File pb_hooks\main.pb.js changed, please restart the app manually
