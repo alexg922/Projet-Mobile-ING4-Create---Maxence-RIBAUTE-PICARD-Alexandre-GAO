@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/screens/product/product_fetcher.dart';
+import 'package:formation_flutter/screens/product/rappel_fetcher.dart';
 import 'package:formation_flutter/screens/product/states/empty/product_page_empty.dart';
 import 'package:formation_flutter/screens/product/states/error/product_page_error.dart';
 import 'package:formation_flutter/screens/product/states/success/product_page_body.dart';
 import 'package:provider/provider.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key, required this.barcode})
-    : assert(barcode.length > 0);
+  // TODO Rajouter le passage d'un paramètre
+  const ProductPage({super.key});
 
-  final String barcode;
+  // Barcode utilisé pour la démo — à remplacer par le vrai scan
+  static const String _barcode = '5000159484695';
 
   @override
   Widget build(BuildContext context) {
     final MaterialLocalizations materialLocalizations =
         MaterialLocalizations.of(context);
 
-    return ChangeNotifierProvider<ProductFetcher>(
-      create: (_) => ProductFetcher(barcode: barcode),
+    return MultiProvider(
+      providers: [
+        // Fetcher produit OpenFoodFacts
+        ChangeNotifierProvider<ProductFetcher>(
+          create: (_) => ProductFetcher(barcode: _barcode),
+        ),
+        // 3️⃣ Fetcher rappel PocketBase
+        ChangeNotifierProvider<RappelFetcher>(
+          create: (_) => RappelFetcher(barcode: _barcode),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
@@ -85,12 +96,12 @@ class _HeaderIcon extends StatelessWidget {
                   color: Colors.white.withValues(alpha: 0.0),
                 ),
                 child: DecoratedBox(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black26,
                         blurRadius: 10.0,
-                        offset: const Offset(0.0, 0.0),
+                        offset: Offset(0.0, 0.0),
                       ),
                     ],
                   ),

@@ -3,7 +3,9 @@ import 'package:formation_flutter/l10n/app_localizations.dart';
 import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/screens/product/product_fetcher.dart';
+import 'package:formation_flutter/screens/product/rappel_fetcher.dart';
 import 'package:formation_flutter/screens/product/states/success/product_header.dart';
+import 'package:formation_flutter/screens/product/states/success/recall_banner.dart';
 import 'package:formation_flutter/screens/product/states/success/tabs/product_tab0.dart';
 import 'package:formation_flutter/screens/product/states/success/tabs/product_tab1.dart';
 import 'package:formation_flutter/screens/product/states/success/tabs/product_tab2.dart';
@@ -39,9 +41,25 @@ class _ProductPageBodyState extends State<ProductPageBody> {
           Expanded(
             child: CustomScrollView(
               slivers: <Widget>[
+                // En-tête produit (photo, nom, etc.)
                 ProductPageHeader(),
+
+                // 4️⃣ Bandeau de rappel — juste avant les scores
+                SliverToBoxAdapter(
+                  child: Consumer<RappelFetcher>(
+                    builder: (_, fetcher, __) {
+                      final state = fetcher.state;
+                      if (state is RappelFetcherFound) {
+                        return RecallBanner(rappel: state.rappel);
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ),
+
+                // Corps (scores + onglets)
                 SliverPadding(
-                  padding: EdgeInsetsDirectional.only(top: 10.0),
+                  padding: const EdgeInsetsDirectional.only(top: 10.0),
                   sliver: SliverFillRemaining(
                     fillOverscroll: true,
                     hasScrollBody: false,
